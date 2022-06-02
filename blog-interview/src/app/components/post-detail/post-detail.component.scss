@@ -1,0 +1,10 @@
+mat-form-field,
+textarea {
+  width: 100%;
+}
+:host {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 3rem;
+}

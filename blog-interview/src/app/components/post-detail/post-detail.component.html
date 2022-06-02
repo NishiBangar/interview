@@ -1,4 +1,4 @@
-<h1>{{ post?.title }}</h1>
+<!-- <h1>{{ post?.title }}</h1>
 <div>{{ post?.content }}</div>
 
 <div>
@@ -6,3 +6,43 @@
     <mat-card-content>{{ comment.content }}</mat-card-content>
   </mat-card>
 </div>
+ -->
+
+<!-- Forms -- (ngForm) 2-way binding using form -->
+<form (submit)="onUpdateForm(postForm)" #postForm="ngForm">
+  <mat-card>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="title"
+        [(ngModel)]="post.title"
+        #title="ngModel"
+        placeholder="Title"
+        required
+      />
+      <mat-error *ngIf="title.invalid">Enter valid title</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="10"
+        name="content"
+        [(ngModel)]="post.content"
+        #content="ngModel"
+        placeholder="Content"
+        required
+      ></textarea>
+      <mat-error *ngIf="content.invalid">Enter valid content</mat-error>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit"
+      [disabled]="postForm.invalid"
+    >
+      Update Post
+    </button>
+  </mat-card>
+</form>
+<!-- End of Forms -->

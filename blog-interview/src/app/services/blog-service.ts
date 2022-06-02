@@ -10,7 +10,7 @@ import { Comment } from '../models/comment';
 @Injectable()
 export class BlogService {
   private _latestId: number = 1;
-  private _posts: Post[] = [
+  /* private _posts: Post[] = [
     {
       title: 'My first post',
       content:
@@ -18,7 +18,8 @@ export class BlogService {
       id: 0,
       comments: [],
     },
-  ];
+  ]; */
+  private _posts: Post[] = [];
 
   private postsUpdated = new Subject<Post[]>();
 
