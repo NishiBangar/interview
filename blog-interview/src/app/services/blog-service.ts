@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Subject } from 'rxjs';
+
 import { Post } from '../models/post';
 import { Comment } from '../models/comment';
 
@@ -18,6 +20,8 @@ export class BlogService {
     },
   ];
 
+  private postsUpdated = new Subject<Post[]>();
+
   public getPosts(): Observable<Post[]> {
     return of(this._posts);
   }
@@ -35,6 +39,7 @@ export class BlogService {
     console.log('------ Inside Blog Service (createPost)------');
     console.log(post);
     this._posts.push({ ...post, id: this._latestId++, comments: [] });
+    this.postsUpdated.next([...this._posts]);
     return of(true);
   }
 
@@ -53,9 +58,11 @@ export class BlogService {
   }
 
   public deletePost(id: number): Observable<boolean> {
+    console.log('---- Delete Post Service ----');
     this._posts = this._posts.filter((post) => {
       return post.id !== id;
     });
+    this.postsUpdated.next([...this._posts]);
     return of(true);
   }
 
@@ -67,5 +74,10 @@ export class BlogService {
       ?.comments?.push(comment);
 
     return of(true);
+  }
+
+  // Listen to the object, ones the data is updated
+  getPostUpdateListener() {
+    return this.postsUpdated.asObservable();
   }
 }
