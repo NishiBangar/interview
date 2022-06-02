@@ -32,6 +32,8 @@ export class BlogService {
   }
 
   public createPost(post: Post): Observable<boolean> {
+    console.log('------ Inside Blog Service ------');
+    console.log(post);
     this._posts.push({ ...post, id: this._latestId++, comments: [] });
     return of(true);
   }

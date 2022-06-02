@@ -11,6 +11,7 @@ const routes: Routes = [
     path: 'posts',
     component: PostsListComponent,
   },
+  { path: 'create', component: PostFormComponent },
 ];
 
 @NgModule({

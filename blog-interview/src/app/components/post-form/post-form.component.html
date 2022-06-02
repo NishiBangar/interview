@@ -1,1 +1,38 @@
-<p>post-form works!</p>
+<!-- Forms -- (ngForm) 2-way binding using form -->
+<form (submit)="onSavePost(postForm)" #postForm="ngForm">
+  <mat-card>
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="title"
+        ngModel
+        #title="ngModel"
+        placeholder="Title"
+        required
+      />
+      <mat-error *ngIf="title.invalid">Enter valid title</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="10"
+        name="content"
+        ngModel
+        #content="ngModel"
+        placeholder="Content"
+        required
+      ></textarea>
+      <mat-error *ngIf="content.invalid">Enter valid content</mat-error>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit"
+      [disabled]="postForm.invalid"
+    >
+      Save Post
+    </button>
+  </mat-card>
+</form>
+<!-- End of Forms -->

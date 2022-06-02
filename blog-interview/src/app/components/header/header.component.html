@@ -1,4 +1,4 @@
-<div class="header">
+<!-- <div class="header">
   <h1 class="title">
     <a [routerLink]="'posts'" [routerLinkActive]="'active'"
       >John's Excellent Blog</a
@@ -7,4 +7,28 @@
   <button class="create-button" mat-raised-button color="primary">
     Create +
   </button>
-</div>
+</div> -->
+
+<mat-toolbar color="primary">
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span
+    ><a [routerLink]="'posts'" [routerLinkActive]="'active'">
+      John's Excellent Blog</a
+    ></span
+  >
+  <span class="spacer"></span>
+  <ul>
+    <li>
+      <a mat-button routerLink="create" routerLinkActive="mat-accent"
+        >Create Post +</a
+      >
+    </li>
+  </ul>
+  <span class="example-spacer"></span>
+</mat-toolbar>
