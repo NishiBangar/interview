@@ -4,11 +4,13 @@ import { Subject } from 'rxjs';
 
 import { Post } from '../models/post';
 import { Comment } from '../models/comment';
+import { Router } from '@angular/router';
 
 // Assume this class is generated - no need to make any changes here
 
 @Injectable()
 export class BlogService {
+  constructor(private router: Router) {}
   private _latestId: number = 1;
   /* private _posts: Post[] = [
     {
@@ -19,7 +21,7 @@ export class BlogService {
       comments: [],
     },
   ]; */
-  private _posts: Post[] = [];
+  _posts: Post[] = [];
 
   private postsUpdated = new Subject<Post[]>();
 
@@ -37,10 +39,9 @@ export class BlogService {
   }
 
   public createPost(post: Post): Observable<boolean> {
-    console.log('------ Inside Blog Service (createPost)------');
-    console.log(post);
     this._posts.push({ ...post, id: this._latestId++, comments: [] });
     this.postsUpdated.next([...this._posts]);
+    this.router.navigate(['/posts']);
     return of(true);
   }
 
@@ -52,6 +53,7 @@ export class BlogService {
     if (postToEdit) {
       postToEdit.title = post.title;
       postToEdit.content = post.content;
+      this.router.navigate(['/posts']);
       return of(true);
     }
 
@@ -59,7 +61,6 @@ export class BlogService {
   }
 
   public deletePost(id: number): Observable<boolean> {
-    console.log('---- Delete Post Service ----');
     this._posts = this._posts.filter((post) => {
       return post.id !== id;
     });

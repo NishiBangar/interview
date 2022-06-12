@@ -1,11 +1,15 @@
 <!-- Forms -- (ngForm) 2-way binding using form to create new post -->
-<form (submit)="onSavePost(postForm)" #postForm="ngForm">
-  <mat-card>
+
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <form (submit)="onSavePost(postForm)" #postForm="ngForm" *ngIf="!isLoading">
     <mat-form-field>
       <input
         matInput
         type="text"
         name="title"
+        id="title"
         ngModel
         #title="ngModel"
         placeholder="Title"
@@ -15,9 +19,11 @@
     </mat-form-field>
     <mat-form-field>
       <textarea
+        id="text-area"
         matInput
         rows="10"
         name="content"
+        id="content"
         ngModel
         #content="ngModel"
         placeholder="Content"
@@ -29,10 +35,11 @@
       mat-raised-button
       color="accent"
       type="submit"
+      id="submitButton"
       [disabled]="postForm.invalid"
     >
       Save Post
     </button>
-  </mat-card>
-</form>
+  </form>
+</mat-card>
 <!-- End of Forms -->

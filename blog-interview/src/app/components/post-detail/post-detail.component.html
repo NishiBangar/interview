@@ -1,21 +1,13 @@
-<!-- <h1>{{ post?.title }}</h1>
-<div>{{ post?.content }}</div>
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-<div>
-  <mat-card *ngFor="let comment of post?.comments">
-    <mat-card-content>{{ comment.content }}</mat-card-content>
-  </mat-card>
-</div>
- -->
-
-<!-- Forms -- (ngForm) 2-way binding using form to Update Blog contents -->
-<form (submit)="onUpdateForm(postForm)" #postForm="ngForm">
-  <mat-card>
+  <form (submit)="onUpdateForm(postForm)" #postForm="ngForm" *ngIf="!isLoading">
     <mat-form-field>
       <input
         matInput
         type="text"
         name="title"
+        id="title"
         [(ngModel)]="post.title"
         #title="ngModel"
         placeholder="Title"
@@ -25,9 +17,11 @@
     </mat-form-field>
     <mat-form-field>
       <textarea
+        id="text-area"
         matInput
         rows="10"
         name="content"
+        id="content"
         [(ngModel)]="post.content"
         #content="ngModel"
         placeholder="Content"
@@ -39,10 +33,12 @@
       mat-raised-button
       color="accent"
       type="submit"
+      id="submitButton"
       [disabled]="postForm.invalid"
     >
       Update Post
     </button>
-  </mat-card>
-</form>
+  </form>
+</mat-card>
+
 <!-- End of Forms -->

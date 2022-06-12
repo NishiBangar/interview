@@ -1,8 +1,8 @@
 <div *ngFor="let post of posts" [routerLinkActive]="'active'">
   <mat-card class="post-card">
-    <!-- <mat-card-title>{{ post.title }}</mat-card-title>
-    <mat-card-content>{{ post.content }}</mat-card-content> -->
-    <mat-accordion multi="true" *ngIf="posts.length > 0">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+    <mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-card-title>
@@ -27,6 +27,6 @@
   </mat-card>
 </div>
 
-<p class="info-text mat-body-1" *ngIf="posts.length <= 0">
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">
   *No posts added yet!
 </p>

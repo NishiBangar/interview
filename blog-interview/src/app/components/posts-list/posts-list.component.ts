@@ -11,6 +11,7 @@ import { Post } from '../../models/post';
 })
 export class PostsListComponent implements OnInit {
   public posts: Post[] = [];
+  isLoading = false;
 
   // private postsSub: Subscription;
   private postsSub: any;
@@ -18,7 +19,11 @@ export class PostsListComponent implements OnInit {
   constructor(private _blogService: BlogService) {}
 
   ngOnInit(): void {
+    //Loading spinner
+    this.isLoading = true;
+
     this._blogService.getPosts().subscribe((posts) => {
+      this.isLoading = false;
       this.posts = posts;
     });
 
@@ -31,8 +36,6 @@ export class PostsListComponent implements OnInit {
   }
 
   onDelete(postId: any) {
-    console.log('---- Delete post componenet');
-    console.log(postId);
     this._blogService.deletePost(postId);
   }
 

@@ -2,19 +2,42 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostFormComponent } from './post-form.component';
 import { BlogService } from '../../services/blog-service';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Post } from '../../models/post';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule, NgForm } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+// Stub class for Router
+class RouterStub {
+  navigate(params: any) {
+    return params;
+  }
+}
+
+//Stub class for ActivatedRoute
+class ActivatedRouteStub {
+  params: Observable<any> = of(true);
+}
 
 describe('PostFormComponent', () => {
   let component: PostFormComponent;
   let fixture: ComponentFixture<PostFormComponent>;
   let blogService: BlogService;
   let createPostSpy: jasmine.Spy;
+  let mockPost: {
+    title: string;
+    content: string;
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [PostFormComponent],
       providers: [BlogService],
+      imports: [RouterTestingModule, FormsModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 
@@ -26,33 +49,58 @@ describe('PostFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create comoponent without error', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call createPost service method when form is submitted', () => {
-    const mockPost = {
-      title: 'test title',
-      content: 'some fantastic content',
-    } as Post;
+  // Create Post form
+  describe('Create Post Form', () => {
+    it('should have input field to enter post title', () => {
+      const title = fixture.nativeElement.querySelector('#title');
+      expect(title).toBeTruthy();
+    });
 
-    fixture.nativeElement.querySelector('#title').value = mockPost.title;
-    fixture.nativeElement
-      .querySelector('#title')
-      .dispatchEvent(new Event('input'));
+    it('should have text-area to enter post content', () => {
+      const content = fixture.nativeElement.querySelector('#content');
+      expect(content).toBeTruthy();
+    });
 
-    fixture.nativeElement.querySelector('#content').value = mockPost.content;
-    fixture.nativeElement
-      .querySelector('#content')
-      .dispatchEvent(new Event('input'));
-    fixture.detectChanges();
+    it('should have submit button to create/save new post', () => {
+      const submitButton = fixture.nativeElement.querySelector('#submitButton');
+      expect(submitButton).toBeTruthy();
+    });
+  });
 
-    fixture.nativeElement.querySelector('#submitButton').click();
-    fixture.detectChanges();
+  // Create Post() method
+  describe('onSavePost()', () => {
+    let form: NgForm;
+    let createSpy: jasmine.Spy;
+    beforeEach(() => {
+      mockPost = {
+        title: 'test title',
+        content: 'some fantastic content',
+      };
 
-    expect(createPostSpy).toHaveBeenCalledWith({
-      ...mockPost,
-      content: 'some terrible content',
+      fixture.nativeElement.querySelector('#title').value = mockPost.title;
+      fixture.nativeElement
+        .querySelector('#title')
+        .dispatchEvent(new Event('input'));
+
+      fixture.nativeElement.querySelector('#content').value = mockPost.content;
+      console.log(fixture.nativeElement.querySelector('#content').value);
+      fixture.nativeElement
+        .querySelector('#content')
+        .dispatchEvent(new Event('input'));
+
+      fixture.nativeElement.querySelector('#submitButton').click();
+    });
+
+    it('should update isLoading to true on submit event', () => {
+      expect(component.isLoading).toBe(true);
+    });
+
+    it('should call createPost() service method when form is submitted', () => {
+      expect(createPostSpy).toHaveBeenCalled();
     });
   });
 });

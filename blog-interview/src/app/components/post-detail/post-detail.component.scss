@@ -1,10 +1,23 @@
+$default-margin-pos: auto;
+$full-width: 100%;
+$half-width: 50%;
+$default-card-boder: solid green;
+
 mat-form-field,
 textarea {
-  width: 100%;
+  width: $full-width;
 }
 :host {
   display: block;
-  width: 50%;
-  margin: 0 auto;
+  width: $half-width;
+  margin: 0 $default-margin-pos;
   margin-top: 3rem;
+}
+
+mat-spinner {
+  margin: $default-margin-pos;
+}
+
+mat-card {
+  border: $default-card-boder;
 }

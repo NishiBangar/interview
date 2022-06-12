@@ -21,34 +21,35 @@ export class PostFormComponent implements OnInit {
   };
   private mode = 'create';
   private postId: string = '';
-  // post: Post;
+  isLoading = false;
 
   constructor(public blogService: BlogService, public route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    //Loading Spinner
+    this.isLoading = true;
     // if Create or Edit post route
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      this.isLoading = false;
       if (paramMap.has('postId')) {
         this.mode = 'edit';
         // this.postId = paramMap.get('postId');
         // this.post = this.blogService.getPost(this.postId);
       } else {
         this.mode = 'create';
-        // this.postId = null;
       }
     });
   }
 
   onSavePost(form: NgForm) {
-    console.log('----- Form content');
-    console.log(form);
+    //Loading spinner
+    this.isLoading = true;
     if (form.invalid) {
       return;
     }
 
     if (this.mode === 'create') {
-      // this.blogService.addPost(form.value.title, form.value.content);
-      this.blogService.createPost({
+      let result = this.blogService.createPost({
         title: form.value.title,
         content: form.value.content,
       });

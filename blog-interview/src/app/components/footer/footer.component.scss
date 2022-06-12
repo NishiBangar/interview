@@ -1,9 +1,21 @@
+$default-margin-pos: auto;
+$default-footer-color: seagreen;
+$default-footer-pos: fixed;
+
 .footer {
-  position: fixed;
+  position: $default-footer-pos;
   bottom: 0;
+}
+
+mat-toolbar {
+  background: $default-footer-color;
 }
 
 span {
   text-align: center;
-  margin: 0 auto;
+  margin: $default-margin-pos;
+}
+
+p {
+  margin: $default-margin-pos;
 }

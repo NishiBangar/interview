@@ -19,6 +19,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
@@ -43,6 +45,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MatIconModule,
     MatExpansionModule,
     MatFormFieldModule,
+    MatProgressSpinnerModule,
   ],
   providers: [BlogService],
   bootstrap: [AppComponent],

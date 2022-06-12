@@ -14,6 +14,7 @@ export class PostDetailComponent implements OnInit {
   // @ts-ignore
   public post: Post;
   private postId: number = 0;
+  isLoading = false;
 
   constructor(
     private _blogService: BlogService,
@@ -21,21 +22,20 @@ export class PostDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    /* this._blogService.getPostById(0).subscribe((post) => {
-      this.post = post;
-    }); */
-
+    // Loading spinner
+    this.isLoading = true;
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      // this.postId = paramMap.get('postId');
-      console.log(typeof Number(this.route.snapshot.paramMap.get('id')));
       this.postId = Number(this.route.snapshot.paramMap.get('id'));
       this._blogService.getPostById(this.postId).subscribe((post) => {
-        this.post = post;
+        this.isLoading = false;
+        this.post = { ...post };
       });
     });
   }
 
   onUpdateForm(form: NgForm) {
+    // Loading spinner
+    this.isLoading = true;
     console.log('---- Update form ----');
     this._blogService.editPost(this.post);
   }

@@ -1,11 +1,20 @@
+$default-margin-pos: auto;
+$full-width: 100%;
+$half-width: 50%;
+$default-cursor-type: pointer;
+$default-font-size: medium;
+$default-font-weight: 500;
+$max-width: 400px;
+$min-width: 100px;
+
 .post-card {
-  max-width: 400px;
+  max-width: $max-width;
   margin: 20px;
-  cursor: pointer;
+  cursor: $default-cursor-type;
 }
 
 p {
-  font-size: medium;
+  font-size: $default-font-size;
 }
 
 .info-text {
@@ -13,5 +22,5 @@ p {
   text-align: center;
   color: red;
   font-size: large;
-  font-weight: 500;
+  font-weight: $default-font-weight;
 }
